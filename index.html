@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,7 +8,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
+    <link rel="icon" type="image/x-icon" href="https://assets-cdn.github.com/favicon.ico">
 
     <title>Dashboard | Github issues</title>
 
@@ -39,7 +40,9 @@
                 <form>
                     <input type="text" class="form-control" placeholder="Enter repository URL..." data-ng-model="repositoryName" update-issues="getAllIssues()">
                 </form>
-                <div class="table-responsive" data-ng-show="isValidRepositoryUrl">
+                <br/>
+                <code class="warning" data-ng-hide="isValidRepositoryUrl">Incorrect repository URL</code>
+                <div class="table-responsive" data-ng-show="showIssuesGrid">
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -47,14 +50,14 @@
                                 <th>Value</th>
                             </tr>
                         </thead>
-                        <tbody data-ng-repeat="kpi in KPIs">                            
+                        <tbody data-ng-repeat="kpi in KPIs">
                             <tr>
                                 <td>{{kpi.title}}</td>
                                 <td>{{kpi.value}}</td>
                             </tr>
                         </tbody>
                     </table>
-                </div>                
+                </div>
             </div>
         </div>
     </div>
@@ -64,8 +67,11 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script>
+        window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')
+    </script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/app.js"></script>
 </body>
+
 </html>
