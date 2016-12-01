@@ -3,6 +3,7 @@
 /*jslint browser: true*/
 
 var githubApiRoot = "https://api.github.com/";
+var githubPageItemsLimit = "100";
 
 var app = angular.module("dashboardHome", []);
 
@@ -104,7 +105,9 @@ app.controller("HomeCtrl", ["fetchAsyncData", "$scope", function(factory, $scope
         }
         if ($scope.isValidRepositoryUrl) {
             // Built the API URL for fetching issues for a repository
-            var rootIssueLink = githubApiRoot + "repos" + repositoryURL.pathname + "/issues?per_page=10";
+            // Handle the case when entered URL can hae a trailing 
+            // TODO: Use some 3rd party library to build clean URLs by default without using custom logic like below
+            var rootIssueLink = githubApiRoot + "repos" + repositoryURL.pathname.replace(/\/+$/, "") + "/issues?per_page=" + githubPageItemsLimit;
             var getIssues = function(issueLink, callback) {
                 var nextPageLink = "";
                 factory.getGitData(issueLink).success(function(data, status, headers, config) {
