@@ -123,6 +123,10 @@ app.controller("HomeCtrl", ["fetchAsyncData", "$scope", function(factory, $scope
                             callback(cleanLink, callback);
                         }
                     }
+                }).error(function(status) {
+                    if (status === 404) {
+                        $scope.isValidRepositoryUrl = false;
+                    }
                 });
             };
             getIssues(rootIssueLink, getIssues);
