@@ -11,7 +11,8 @@ var app = angular.module("dashboardHome", []);
 app.controller("HomeCtrl", ["fetchAsyncData", "$scope", function(factory, $scope) {
     "use strict";
     $scope.repositoryName = "";
-    $scope.isValidRepositoryUrl = false;
+    $scope.showIssuesGrid = false;
+    $scope.isValidRepositoryUrl = true;
     $scope.allIssues = [];
     $scope.KPIs = [{
         title: "Total number of open issues",
@@ -112,6 +113,7 @@ app.controller("HomeCtrl", ["fetchAsyncData", "$scope", function(factory, $scope
                 var nextPageLink = "";
                 factory.getGitData(issueLink).success(function(data, status, headers, config) {
                     $scope.isValidRepositoryUrl = data.message === "Not Found" ? false : true;
+                    $scope.showIssuesGrid = $scope.isValidRepositoryUrl;
                     $scope.allIssues = $scope.allIssues.concat(data);
                     // The UI will be updated asynchronusly, i.e. as we get successive pages of GitHUb API response we will keep updating the KPIs
                     $scope.updateKPIs();
@@ -124,7 +126,8 @@ app.controller("HomeCtrl", ["fetchAsyncData", "$scope", function(factory, $scope
                         }
                     }
                 }).error(function(status) {
-                    if (status === 404) {
+                    if (status.message === "Not Found") {
+                        $scope.showIssuesGrid = false;
                         $scope.isValidRepositoryUrl = false;
                     }
                 });
@@ -132,7 +135,6 @@ app.controller("HomeCtrl", ["fetchAsyncData", "$scope", function(factory, $scope
             getIssues(rootIssueLink, getIssues);
         }
     };
-    $scope.getAllIssues();
 }]);
 
 // TODO: move this factory to a seaprate file of there are multiple controllers
