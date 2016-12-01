@@ -12,6 +12,8 @@ Output :UI displays a table with the following information -
 
 # Improvements:
 - Separate directives factories and controllers into multiple files
+- Improve URL parsing using some external library
+- Handle more edge cases while URL parsing. For example only a repository URL is supported right now (http://www.github.com/user/respositoryURL/), but not "http://www.github.com/user/respositoryURL/issues"
 - Use moment.js for parsing datetime of a GitHub issue
 - Refactor code if more fucntionality is required
 - Use view templating if more views are added
